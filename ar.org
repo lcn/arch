@@ -1,0 +1,58 @@
+wifi-menu
+ip link                     ;; check
+ping archlinux.org          ;; check
+timedatectl set-ntp true
+timdatectl status          ;; check
+fdisk -l                    ;; check
+fdisk /dev/sda              ;; creer partities
+mkfs.ext4 /dev/sda!
+mkfs.ext4 /dev/sda?
+mount /dev/sda1 /mnt
+fallocate -l 2G /mnt/swapfile
+mkswap /mnt/swapfile
+swapon /mnt/swapfile
+pacstrap /mnt base linux linux-firmware
+pacstrap /mnt nano networkmanager grub iputils git
+pacstrap /mnt man man-db manpages texinfo
+genfstab -U /mnt >> /mnt/etc/fstab
+/swapfile none swap defaults 0 0
+cat /mnt/etc/fstab          ;; check
+arch-chroot /mnt            ;; Change root into installed system
+hwclock --systohc
+nano /etc/locale.gen        ;; activeer: en_US.UTF-8 UTF-8, en_US.???, nl_NL.???
+locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+echo <hostnaam> > /etc/hostname
+## Hosts
+nano /etc/hosts
+en voeg toe:
+127.0.0.1                      localhost
+;;1                            localhost
+127.0.1.1                      <hostnaam>.localdomain <hostnaam>
+192.168.1.5                    ubulcn
+192.168.1.20                   lcnnas
+systemctl enable NetworkManager   ;; CAPS !!
+## GRUB
+pacman -S iputils grub         ;; networking tools en bootloader
+grub-install --target=i386-pc /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+passwd                         ;; set root password
+
+                      ** R E B O O T **
+pacman -S sudo
+useradd -m -G ftp,log,root,http,wheel lcn
+passwd lcn
+#### Edit =/etc/sudoers= en uncomment de regel waar aangegeven wordt dat
+#### gebruikers in de /wheel/ groep privileges krijgen.
+#### Ook uncomment de regel met =sudo=.
+
+#### CLose chroot omgeving en reboot het systeem.
+####Na rebooten wifi opstarten
+nmcli device wifi connect lcn password <password>
+pacman -S --needed base-devel
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+pacman -S xorg-server
+pacman -S xorg-server-utils
+

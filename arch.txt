@@ -1,0 +1,103 @@
+Arch linux op ASUS Notebook
+20200213
+
+Installatie oa gebaseerd op https://itsfoss.com/install-arch-linux.
+
+Boot van USB
+
+Run wifimenu om wifi te starten
+wifi-menu
+
+Configureer de disk(s) en formatteer:
+ fdisk -l
+ fdisk ‘/dev/sda’
+ mkfs.ext4 ‘/dev/sda1’ 
+ mkfs.ext4 ‘/dev/sda2’
+
+Sync pacman repository
+pacman -Syy
+
+Installeer utility en optimaliseer missorlist
+pacman -S reflector
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.old
+reflector –latest 50 –sort rate –save /etc/pacman.d/mirrorlist
+
+Mount root partition, creeer home mountpoint en mount home
+mount /dev/sda1 /mnt
+mkdir /mnt/home
+mount /dec/sda2 /mnt/home
+
+Creeer en gebruik swapFILE
+fallocate -l 2G /mnt/swapfile
+mkswap /mnt/swapfile
+chmod 0600 /mnt/swapfile
+swapon /mnt/swapfile
+
+Installeer basic software
+pacstrap /mnt base linux linux-firmware nano networkmanager grub 
+
+Generate fstab file
+genfstab -U /mnt >> /mnt/etc/fstab
+
+Check de korrektheid van fstab of ook de swapfile meegenomen is
+cat /mnt/etc/fstab
+
+Chroot in het nieuwe system
+arch-chroot /mnt
+
+Activeer de juiste locales;
+nano /etc/locales.gen
+Uncomment de regels met:
+en_US.* en nl_NL
+
+Genereer correcte locales bestand
+locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+
+Zet de hostnaam van het systeem
+echo archlap > /etc/hostname
+
+Zet enige basic waarden in de hosts file
+nano /etc/hosts
+127.0.0.1                localhost
+;;1                      localhost
+127.0.1.1.               archlap.localdomain archlap
+192.168.1.5              ubulcn
+192.168.1.20             lcnnas
+
+Initieer networkmanager (let op de juiste hoofdletters)
+systemctl enable NetworkManager
+
+Installeer de bootloader en genereer de configuratietabel
+grub-install --target=i386-pc /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+
+Zet rootpassword
+passwd
+
+Voeg 'gewone' gebruiker toe aan het systeem
+useradd -m -G wheel,storage,power lcn
+passwd lcn
+
+Enable sudo access voor de wheel-groep gebruikers. Remove comment in front of
+line '# %wheel ALL=(ALL) ALL'
+nano /etc/sudoers 
+
+*** Exit chroot omgeving en reboot in het nieuwe systeem
+
+Maak het mogelijk manpages to lezen
+pacman -S man man-db man-pages
+
+
+
+
+
+
+Installeer geluid
+sudo pacman -S alsa-utils
+
+Installeer bash-completion
+sudo pacman -S bash-completion
+
+
+
