@@ -20,7 +20,7 @@ pacman -Syy
 Installeer utility en optimaliseer missorlist
 pacman -S reflector
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.old
-reflector –latest 50 –sort rate –save /etc/pacman.d/mirrorlist
+reflector –-latest 50 –-sort rate –-save /etc/pacman.d/mirrorlist
 
 Mount root partition, creeer home mountpoint en mount home
 mount /dev/sda1 /mnt
@@ -90,8 +90,8 @@ pacman -S man man-db man-pages
 
 
 
-
-
+Start (eenmalig) wifi networking
+nmcli device wifi connect lcn password <password>
 
 Installeer geluid
 sudo pacman -S alsa-utils
