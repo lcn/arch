@@ -1,0 +1,10 @@
+{
+    "http://showrss.info/user/12130.rss?magnets=true&namespaces=true&name=null&quality=null&re=null": {
+        "uid": "{54d0fafc-5a30-45cf-98e9-d6d0e673508d}",
+        "url": "http://showrss.info/user/12130.rss?magnets=true&namespaces=true&name=null&quality=null&re=null"
+    },
+    "showRSS personal feed": {
+        "uid": "{f81f7c9b-7fa5-46bd-a9b6-8a86229b19de}",
+        "url": "http://showrss.info/user/12130.rss?magnets=true&namespaces=true&name=null&quality=hd&re=yes"
+    }
+}
