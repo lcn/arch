@@ -1,0 +1,22 @@
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a device; this may
+# be used with UUID= as a more robust way to name devices that works even if
+# disks are added and removed. See fstab(5).
+#
+# <file system>             <mount point>  <type>  <options>  <dump>  <pass>
+UUID=75A4-638A                            /boot/efi      vfat    defaults,umask=0077 0 2
+UUID=59027b5c-90aa-415c-9ca9-d572cd283b5c /              btrfs   subvol=/@,defaults,noatime,compress=zstd,commit=120 0 0
+UUID=59027b5c-90aa-415c-9ca9-d572cd283b5c /home          btrfs   subvol=/@home,defaults,noatime,compress=zstd,commit=120 0 0
+UUID=59027b5c-90aa-415c-9ca9-d572cd283b5c /root          btrfs   subvol=/@root,defaults,noatime,compress=zstd,commit=120 0 0
+UUID=59027b5c-90aa-415c-9ca9-d572cd283b5c /srv           btrfs   subvol=/@srv,defaults,noatime,compress=zstd,commit=120 0 0
+UUID=59027b5c-90aa-415c-9ca9-d572cd283b5c /var/cache     btrfs   subvol=/@cache,defaults,noatime,compress=zstd,commit=120 0 0
+UUID=59027b5c-90aa-415c-9ca9-d572cd283b5c /var/tmp       btrfs   subvol=/@tmp,defaults,noatime,compress=zstd,commit=120 0 0
+UUID=59027b5c-90aa-415c-9ca9-d572cd283b5c /var/log       btrfs   subvol=/@log,defaults,noatime,compress=zstd,commit=120 0 0
+tmpfs                                     /tmp           tmpfs   defaults,noatime,mode=1777 0 0
+
+//synnas/films        /home/lcn/_FILMS      cifs _netdev,credentials=/home/lcn/.smbcred,iocharset=utf8,uid=lcn,gid=lcn,vers=3.0
+//synnas/fotos        /home/lcn/_FOTOS      cifs _netdev,credentials=/home/lcn/.smbcred,iocharset=utf8,uid=lcn,gid=lcn,vers=3.0
+//synnas/muziek       /home/lcn/_MUZIEK     cifs _netdev,credentials=/home/lcn/.smbcred,iocharset=utf8,uid=lcn,gid=lcn,vers=3.0
+//synnas/NAS          /home/lcn/_NAS        cifs _netdev,credentials=/home/lcn/.smbcred,iocharset=utf8,uid=lcn,gid=lcn,vers=3.0
+//synnas/tvseries     /home/lcn/_TVSERIES   cifs _netdev,credentials=/home/lcn/.smbcred,iocharset=utf8,uid=lcn,gid=lcn,vers=3.0
